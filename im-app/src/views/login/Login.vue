@@ -23,7 +23,12 @@
     },
     created() {
       requestUserInfoByGet().then(res => {
-        console.log(res.data)
+        res = res.data
+        if (res.code === 0) {
+
+        } else {
+          
+        }
       }).catch(err => {
         console.log(err)
       })
