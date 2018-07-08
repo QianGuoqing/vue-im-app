@@ -2,16 +2,16 @@
   <div class="register">
     <logo></logo>
     <div class="form-section">
-      <mt-field label="账户" placeholder="在此输入账户"></mt-field>
-      <mt-field label="密码" placeholder="在此输入密码" type="password"></mt-field>
-      <mt-field label="确认密码" placeholder="在此确认密码" type="password"></mt-field>
+      <mt-field label="账户" placeholder="在此输入账户" v-model="account.username"></mt-field>
+      <mt-field label="密码" placeholder="在此输入密码" type="password" v-model="account.password"></mt-field>
+      <mt-field label="确认密码" placeholder="在此确认密码" type="password" v-model="account.confirmPassword"></mt-field>
       <mt-radio
-        v-model="optionValue"
-        :options="['牛人', 'BOSS']">
+        v-model="account.optionValue"
+        :options="['Genius', 'Boss']">
       </mt-radio>
     </div>
     <div class="buttons-section">
-      <mt-button type="primary" size="large">注册</mt-button>
+      <mt-button type="primary" size="large" @click="onRegister">注册</mt-button>
     </div>
   </div>
 </template>
@@ -25,7 +25,17 @@
     },
     data() {
       return {
-        optionValue: ''
+        account: {
+          username: '',
+          password: '',
+          confirmPassword: '',
+          optionValue: ''
+        },
+      }
+    },
+    methods: {
+      onRegister() {
+        console.dir(this.account)
       }
     },
   }
