@@ -15,10 +15,18 @@
 
 <script>
   import Logo from '../../components/logo/Logo.vue'
+  import { requestUserInfoByGet } from '../../common/js/request.js'
   export default {
     name: 'Login',
     components: {
       Logo
+    },
+    created() {
+      requestUserInfoByGet().then(res => {
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     methods: {
       toRegister() {

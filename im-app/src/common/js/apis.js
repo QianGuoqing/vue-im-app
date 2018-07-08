@@ -1,0 +1,1 @@
+export const API_USER_INFO = '/api/user/info'
