@@ -7,13 +7,24 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-
+    user: {
+      username: '',
+      password: '',
+      type: '',
+      avatar: '',
+      description: '',
+      title: '',
+      company: '',
+      money: ''
+    }
   },
   getters: {
-
+    account: state => state.user
   },
   mutations: {
-
+    setUser(state, user) {
+      state.user = user
+    }
   },
   actions: {
     

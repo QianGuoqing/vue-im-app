@@ -19,7 +19,9 @@
 <script>
   import Logo from '../../components/logo/Logo.vue'
   import { postUserRegister } from '../../common/js/request.js'
+  import { redirectToPath } from '../../common/js/utils.js'
   import { Toast } from 'mint-ui'
+  import { mapState } from 'vuex'
   export default {
     name: 'Register',
     components: {
@@ -34,6 +36,9 @@
           type: ''
         },
       }
+    },
+    computed: {
+      ...mapState(['user'])
     },
     methods: {
       onRegister() {
@@ -73,12 +78,17 @@
               duration: 1000
             })
           }
-          this.account = {
-            username: '',
-            password: '',
-            confirmPassword: '',
-            type: ''
+
+          let user = {
+            username: this.account.username,
+            password: this.account.password,
+            type: this.account.type
           }
+          this.$store.commit('setUser', user)
+          let redirectUrl = redirectToPath(this.user.type, this.user.avatar)
+          this.$router.push({
+            path: redirectUrl
+          })
         }).catch(err => {
           Toast({
             message: err.msg,

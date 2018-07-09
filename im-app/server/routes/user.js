@@ -1,4 +1,5 @@
 const express = require('express')
+const md5 = require('md5')
 const router = express.Router()
 const userModel = require('../models/userModel')
 
@@ -14,7 +15,7 @@ router.post('/user/register', (req, res) => {
     }
     userModel.create({
       username: username,
-      password: password,
+      password: md5(password),
       type: type
     }, (err, doc) => {
       if (err) {
