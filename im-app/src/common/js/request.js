@@ -2,7 +2,8 @@ import axios from 'axios'
 import { 
   API_USER_INFO,
   API_USER_LIST,
-  API_USER_REGISTER
+  API_USER_REGISTER,
+  API_USER_LOGIN
 } from './apis'
 
 axios.defaults.withCredentials = true
@@ -33,6 +34,19 @@ export function postUserRegister(username, password, type) {
       username: username,
       password: password,
       type: type
+    }).then(res => {
+      resolve(res)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function postUserLogin(username, password) {
+  return new Promise((resolve, reject) => {
+    axios.post(API_USER_LOGIN, {
+      username: username,
+      password: password
     }).then(res => {
       resolve(res)
     }).catch(err => {

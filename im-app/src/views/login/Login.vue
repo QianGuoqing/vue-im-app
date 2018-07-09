@@ -3,11 +3,11 @@
     <logo></logo>
     <div class="login-info">按照如下信息登陆</div>
     <div class="form-section">
-      <mt-field label="账户" placeholder="在此输入账户"></mt-field>
-      <mt-field label="密码" placeholder="在此输入密码" type="password"></mt-field>
+      <mt-field label="账户" placeholder="在此输入账户" v-model="account.username"></mt-field>
+      <mt-field label="密码" placeholder="在此输入密码" type="password" v-model="account.password"></mt-field>
     </div>
     <div class="buttons-section">
-      <mt-button type="primary" size="large">登陆</mt-button>
+      <mt-button type="primary" @click="onLogin" size="large">登陆</mt-button>
       <mt-button @click="toRegister" class="register-button" type="primary" size="large">注册</mt-button>
     </div>
   </div>
@@ -15,28 +15,61 @@
 
 <script>
   import Logo from '../../components/logo/Logo.vue'
-  import { requestUserInfoByGet } from '../../common/js/request.js'
+  import { postUserLogin } from '../../common/js/request.js'
+  import { redirectToPath } from '../../common/js/utils.js'
+  import { Toast } from 'mint-ui'
   export default {
     name: 'Login',
     components: {
       Logo
     },
-    created() {
-      requestUserInfoByGet().then(res => {
-        res = res.data
-        if (res.code === 0) {
-
-        } else {
-          
+    data() {
+      return {
+        account: {
+          username: '',
+          password: ''
         }
-      }).catch(err => {
-        console.log(err)
-      })
+      }
     },
     methods: {
       toRegister() {
         this.$router.push({
           path: '/register'
+        })
+      },
+      onLogin() {
+        let { username, password } = this.account
+        if (!username || !password) {
+          Toast({
+            message: '输入信息不能为空',
+            position: 'middle',
+            duration: 1000
+          })
+          return
+        }
+        postUserLogin(username, password).then(res => {
+          res = res.data
+          console.log('login', res)
+          if (res.code === 1) {
+            Toast({
+              message: res.msg,
+              position: 'middle',
+              duration: 1000
+            })
+          } else if (res.code === 0) {
+            res = res.data
+            let type = res.type.toLowerCase()
+            let url = redirectToPath(type)
+            this.$router.push({
+              path: url
+            })
+          }
+        }).catch(err => {
+          Toast({
+            message: '网络错误',
+            position: 'middle',
+            duration: 1000
+          })
         })
       }
     },

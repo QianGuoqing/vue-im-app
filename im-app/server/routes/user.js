@@ -3,6 +3,31 @@ const md5 = require('md5')
 const router = express.Router()
 const userModel = require('../models/userModel')
 
+router.post('/user/login', (req, res) => {
+  let { username, password } = req.body
+  userModel.findOne({
+    username: username,
+    password: md5(password)
+  }, (err, doc) => {
+    if (err) {
+      return res.json({
+        code: 1,
+        msg: '服务器出错'
+      })
+    }
+    if (!doc) {
+      return res.json({
+        code: 1,
+        msg: '用户名或密码错误'
+      })
+    }
+    return res.json({
+      code: 0,
+      data: doc
+    })
+  })
+})
+
 router.post('/user/register', (req, res) => {
   console.log(req.body)
   let { username, password, type } = req.body
