@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { requestUserInfoByGet } from '../common/js/request'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -14,7 +16,7 @@ const store = new Vuex.Store({
 
   },
   actions: {
-
+    
   }
 })
 
