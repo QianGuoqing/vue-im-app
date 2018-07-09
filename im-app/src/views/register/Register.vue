@@ -6,7 +6,7 @@
       <mt-field label="密码" placeholder="在此输入密码" type="password" v-model="account.password"></mt-field>
       <mt-field label="确认密码" placeholder="在此确认密码" type="password" v-model="account.confirmPassword"></mt-field>
       <mt-radio
-        v-model="account.optionValue"
+        v-model="account.type"
         :options="['Genius', 'Boss']">
       </mt-radio>
     </div>
@@ -18,6 +18,8 @@
 
 <script>
   import Logo from '../../components/logo/Logo.vue'
+  import { postUserRegister } from '../../common/js/request.js'
+  import { Toast } from 'mint-ui'
   export default {
     name: 'Register',
     components: {
@@ -29,13 +31,61 @@
           username: '',
           password: '',
           confirmPassword: '',
-          optionValue: ''
+          type: ''
         },
       }
     },
     methods: {
       onRegister() {
-        console.dir(this.account)
+        let { username, password, type, confirmPassword } = this.account
+        if (!username || !password || !type || !confirmPassword) {
+          Toast({
+            message: '输入不能为空',
+            position: 'middle',
+            duration: 1000
+          })
+          return
+        }
+        if (username !== confirmPassword) {
+          Toast({
+            message: '两次密码输入不一致',
+            position: 'middle',
+            duration: 1000
+          })
+          return
+        }
+        this._postUserRegister(this.account)
+      },
+      _postUserRegister(account) {
+        let { username, password, type } = account
+        postUserRegister(username, password, type).then(res => {
+          res = res.data
+          if (res.code === 1) {
+            Toast({
+              message: res.msg,
+              position: 'middle',
+              duration: 1000
+            })
+          } else {
+              Toast({
+              message: res.msg,
+              position: 'middle',
+              duration: 1000
+            })
+          }
+          this.account = {
+            username: '',
+            password: '',
+            confirmPassword: '',
+            type: ''
+          }
+        }).catch(err => {
+          Toast({
+            message: err.msg,
+            position: 'middle',
+            duration: 1000
+          })
+        })
       }
     },
   }

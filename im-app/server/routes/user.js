@@ -2,6 +2,35 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../models/userModel')
 
+router.post('/user/register', (req, res) => {
+  console.log(req.body)
+  let { username, password, type } = req.body
+  userModel.findOne({ username: username }, (err, doc) => {
+    if (doc) {
+      return res.json({
+        code: 1,
+        msg: '用户名已存在'
+      })
+    }
+    userModel.create({
+      username: username,
+      password: password,
+      type: type
+    }, (err, doc) => {
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: '服务器出错'
+        })
+      }
+      return res.json({
+        code: 0,
+        msg: '注册成功'
+      })
+    })
+  })
+})
+
 router.get('/user/list', (req, res) => {
   userModel.find({}, (err, doc) => {
     return res.json(doc)
