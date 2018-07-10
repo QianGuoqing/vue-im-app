@@ -26,6 +26,11 @@ export default new Router({
       path: '/boss',
       name: 'Boss',
       component: () => import('../views/boss/Boss.vue')
+    },
+    {
+      path: '/boss-info',
+      name: 'BossInfo',
+      component: () => import('../views/boss-info/BossInfo.vue')
     }
   ]
 })
