@@ -18,7 +18,7 @@
           res = res.data
           if (res.code === 1) {
             Toast({
-              message: '尚未登录',
+              message: '尚未登陆',
               position: 'top',
               duration: 2000,
             })

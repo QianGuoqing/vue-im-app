@@ -85,9 +85,9 @@
             type: this.account.type
           }
           this.$store.commit('setUser', user)
-          let redirectUrl = redirectToPath(this.user.type, this.user.avatar)
+          // let redirectUrl = redirectToPath(this.user.type, this.user.avatar)
           this.$router.push({
-            path: redirectUrl
+            path: '/login'
           })
         }).catch(err => {
           Toast({

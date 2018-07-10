@@ -21,6 +21,7 @@ router.post('/user/login', (req, res) => {
         msg: '用户名或密码错误'
       })
     }
+    res.cookie('user_id', doc._id)
     return res.json({
       code: 0,
       data: doc
@@ -64,8 +65,30 @@ router.get('/user/list', (req, res) => {
 })
 
 router.get('/user/info', (req, res) => {
-  return res.json({
-    code: 1
+  let { user_id } = req.cookies
+  if (!user_id) {
+    return res.json({
+      code: 1
+    })
+  }
+  userModel.findOne({ _id: user_id }, (err, doc) => {
+    if (err) {
+      return res.json({
+        code: 0,
+        msg: '服务器错误'
+      })
+    }
+    if (!doc) {
+      return res.json({
+        code: 1,
+        msg: '用户不存在'
+      })
+    } else {
+      return res.json({
+        code: 0,
+        data: doc
+      })
+    }
   })
 })
 
