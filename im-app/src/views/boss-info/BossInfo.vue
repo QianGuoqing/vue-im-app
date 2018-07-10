@@ -22,14 +22,19 @@
       <mt-field label="职位薪资" v-model="money"></mt-field>
       <mt-field label="职位要求" type="textarea" rows="4" v-model="description"></mt-field>
     </div>
-    <mt-button type="primary" size="large" class="save-button">保存</mt-button>
+    <mt-button type="primary" size="large" class="save-button" @click="onUpdate">保存</mt-button>
   </div>
 </template>
 
 <script>
-  import { Header } from 'mint-ui'
+  import { Header, Toast } from 'mint-ui'
+  import { mapState } from 'vuex'
+  import { requestUserInfoByGet, postUserUpdate } from '../../common/js/request.js'
   export default {
     name: 'BossInfo',
+    created() {
+      this._getUserInfo()
+    },
     data() {
       return {
         avatar: {},
@@ -41,6 +46,7 @@
       }
     },
     computed: {
+      ...mapState(['user']),
       avatarArray() {
         return this.avatarList.split(',').map(avatar => {
           return {
@@ -53,6 +59,50 @@
     methods: {
       chooseAvatar(avatar) {
         this.avatar = avatar
+      },
+      onUpdate() {
+        postUserUpdate(this.avatar.path, this.description, this.title, this.company, this.money).then(res => {
+          let updateUser = {
+            username: this.user.username,
+            password: this.user.password,
+            type: this.user.type,
+            avatar: this.avatar.path,
+            description: this.description,
+            title: this.title,
+            company: this.company,
+            money: this.money
+          }
+          this.$store.commit('setUser', updateUser)
+          localStorage.setItem('avatar', this.avatar.path)
+        }).catch(err => {
+          Toast({
+            message: err.msg,
+            position: 'middle',
+            duration: 1000
+          })
+        })
+      },
+      _getUserInfo() {
+        requestUserInfoByGet().then(res => {
+          res = res.data
+          if (res.code === 1) {
+            Toast({
+              message: '尚未登陆',
+              position: 'middle',
+              duration: 1000
+            })
+            this.$router.push({
+              path: '/login'
+            })
+          }
+        }).catch(err => {
+          Toast({
+            message: '服务器错误',
+            position: 'middle',
+            duration: 1000
+          })
+        })
+        return
       }
     },
   }

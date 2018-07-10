@@ -37,9 +37,6 @@
         },
       }
     },
-    computed: {
-      ...mapState(['user'])
-    },
     methods: {
       onRegister() {
         let { username, password, type, confirmPassword } = this.account
@@ -78,13 +75,6 @@
               duration: 1000
             })
           }
-
-          let user = {
-            username: this.account.username,
-            password: this.account.password,
-            type: this.account.type
-          }
-          this.$store.commit('setUser', user)
           // let redirectUrl = redirectToPath(this.user.type, this.user.avatar)
           this.$router.push({
             path: '/login'

@@ -18,6 +18,7 @@
   import { postUserLogin } from '../../common/js/request.js'
   import { redirectToPath } from '../../common/js/utils.js'
   import { Toast } from 'mint-ui'
+  import { mapState } from 'vuex'
   export default {
     name: 'Login',
     components: {
@@ -30,6 +31,9 @@
           password: ''
         }
       }
+    },
+    computed: {
+      ...mapState(['user'])
     },
     methods: {
       toRegister() {
@@ -58,8 +62,15 @@
             })
           } else if (res.code === 0) {
             res = res.data
-            let type = res.type.toLowerCase()
-            let url = redirectToPath(type)
+            let { username, password, type } = res
+            let user = {
+              username: username,
+              password: password,
+              type: type
+            }
+            this.$store.commit('setUser', user)
+            let typeLowercase = res.type.toLowerCase()
+            let url = redirectToPath(typeLowercase, localStorage.getItem('avatar'))
             this.$router.push({
               path: url
             })

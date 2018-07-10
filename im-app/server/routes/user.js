@@ -3,6 +3,29 @@ const md5 = require('md5')
 const router = express.Router()
 const userModel = require('../models/userModel')
 
+router.post('/user/update', (req, res) => {
+  let { user_id } = req.cookies
+  if (!user_id) {
+    return res.json({
+      code: 1
+    })
+  }
+  let moreInfoData = req.body
+  userModel.findByIdAndUpdate(user_id, moreInfoData, (err, doc) => {
+    if (err) {
+      return res.json({
+        code: 1,
+        msg: '服务器错误'
+      })
+    }
+    let totalData = Object.assign(doc, moreInfoData)
+    return res.json({
+      code: 0,
+      data: totalData
+    })
+  })
+})
+
 router.post('/user/login', (req, res) => {
   let { username, password } = req.body
   userModel.findOne({
