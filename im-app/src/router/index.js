@@ -31,6 +31,11 @@ export default new Router({
       path: '/boss-info',
       name: 'BossInfo',
       component: () => import('../views/boss-info/BossInfo.vue')
+    },
+    {
+      path: '/genius-info',
+      name: 'GeniusInfo',
+      component: () => import('../views/genius-info/GeniusInfo.vue')
     }
   ]
 })
