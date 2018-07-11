@@ -73,7 +73,7 @@
             money: this.money
           }
           this.$store.commit('setUser', updateUser)
-          localStorage.setItem('avatar', this.avatar.path)
+          localStorage.setItem('user_detail', JSON.stringify(updateUser))
         }).catch(err => {
           Toast({
             message: err.msg,

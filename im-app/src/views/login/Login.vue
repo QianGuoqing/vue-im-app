@@ -15,7 +15,7 @@
 
 <script>
   import Logo from '../../components/logo/Logo.vue'
-  import { postUserLogin } from '../../common/js/request.js'
+  import { postUserLogin, getUserByName } from '../../common/js/request.js'
   import { redirectToPath } from '../../common/js/utils.js'
   import { Toast } from 'mint-ui'
   import { mapState } from 'vuex'
@@ -70,14 +70,31 @@
             }
             this.$store.commit('setUser', user)
             let typeLowercase = res.type.toLowerCase()
-            let url = redirectToPath(typeLowercase, localStorage.getItem('avatar'))
-            this.$router.push({
-              path: url
-            })
+            this._getUser(username, typeLowercase)
           }
         }).catch(err => {
           Toast({
             message: '网络错误',
+            position: 'middle',
+            duration: 1000
+          })
+        })
+      },
+      _getUser(username, type) {
+        getUserByName(username).then(res => {
+          res = res.data
+          res = res.data
+          console.log('get user login', res);
+          if (res.avatar) {
+            localStorage.setItem('user_detail', JSON.stringify(res))
+          }
+          let url = redirectToPath(type, res.avatar)
+          this.$router.push({
+            path: url
+          })
+        }).catch(err => {
+          Toast({
+            message: err,
             position: 'middle',
             duration: 1000
           })

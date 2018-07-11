@@ -1,6 +1,6 @@
 <template>
   <div class="boss-message">
-    boss消息
+    <mt-header title="Boss消息"></mt-header>
   </div>
 </template>
 

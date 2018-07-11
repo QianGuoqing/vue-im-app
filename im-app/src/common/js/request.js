@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { 
+  API_USER,
   API_USER_INFO,
   API_USER_LIST,
   API_USER_REGISTER,
@@ -12,6 +13,26 @@ axios.defaults.withCredentials = true
 export function requestUserInfoByGet() {
   return new Promise((resolve, reject) => {
     axios.get(API_USER_INFO).then(res => {
+      resolve(res)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getUserListByType(type) {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_USER_LIST}?type=${type}`).then(res => {
+      resolve(res)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getUserByName(username) {
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_USER}?username=${username}`).then(res => {
       resolve(res)
     }).catch(err => {
       reject(err)

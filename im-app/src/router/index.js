@@ -45,6 +45,10 @@ export default new Router({
           path: 'center',
           name: 'BossCenter',
           component: BossCenter
+        },
+        {
+          path: '',
+          redirect: 'genius-list'
         }
       ]
     },

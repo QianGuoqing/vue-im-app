@@ -82,9 +82,26 @@ router.post('/user/register', (req, res) => {
 })
 
 router.get('/user/list', (req, res) => {
-  userModel.find({}, (err, doc) => {
-    return res.json(doc)
-  })
+  let { type } = req.query
+  if (!type) {
+    userModel.find({}, (err, doc) => {
+      return res.json(doc)
+    })
+  } else {
+    type = type[0].toUpperCase() + type.substring(1)
+    userModel.find({type}, (err, doc) => {
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: '服务器错误'
+        })
+      }
+      return res.json({
+        code: 0,
+        data: doc
+      })
+    })
+  }
 })
 
 router.get('/user/info', (req, res) => {
@@ -112,6 +129,28 @@ router.get('/user/info', (req, res) => {
         data: doc
       })
     }
+  })
+})
+
+router.get('/user', (req, res) => {
+  let { username } = req.query
+  if (!username) {
+    return res.json({
+      code: 1,
+      msg: 'error'
+    })
+  }
+  userModel.findOne({ username }, (err, doc) => {
+    if (err) {
+      return res.json({
+        code: 1,
+        msg: '服务器错误'
+      })
+    }
+    return res.json({
+      code: 0,
+      data: doc
+    })
   })
 })
 

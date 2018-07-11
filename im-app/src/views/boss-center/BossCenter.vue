@@ -1,6 +1,6 @@
 <template>
   <div class="boss-center">
-    Boss个人中心
+    <mt-header title="Boss个人中心"></mt-header>
   </div>
 </template>
 
