@@ -1,14 +1,19 @@
 <template>
   <div class="boss">
-    boss页面
+    <router-view></router-view>
+    <boss-tab></boss-tab>
   </div>
 </template>
 
 <script>
   import { requestUserInfoByGet } from '../../common/js/request.js'
   import { Toast } from 'mint-ui'
+  import BossTab from '../../components/boss-tab/BossTab.vue'
   export default {
     name: 'Boss',
+    components: {
+      BossTab
+    },
     created() {
       this._validateLoginStatus()
     },
@@ -31,4 +36,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  .boss
+    height 100%
+    background-color #f5f5f5
 </style>
