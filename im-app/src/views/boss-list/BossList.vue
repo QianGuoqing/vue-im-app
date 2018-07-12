@@ -1,33 +1,35 @@
 <template>
-  <div class="genius-list">
-    <mt-header title="Genius列表"></mt-header>
-    <ul class="genius-ul">
-      <li class="genius-item" v-for="genius in geniusList" :key="genius._id">
+  <div class="boss-list">
+    <mt-header title="Boss列表"></mt-header>
+    <ul class="boss-ul">
+      <li class="boss-item" v-for="boss in bossList" :key="boss._id">
         <list-card
-          :avatar="genius.avatar"
-          :username="genius.username"
-          :title="genius.title"
-          :description="genius.description.split('\n')"></list-card>
+          :avatar="boss.avatar"
+          :username="boss.username"
+          :title="boss.title"
+          :description="boss.description.split('\n')"
+          :company="boss.company"
+          :money="boss.money"></list-card>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  import { getUserListByType } from '../../common/js/request.js'
-  import { Toast } from 'mint-ui'
   import ListCard from '../../components/list-card/ListCard.vue'
+  import { Toast } from 'mint-ui'
+  import { getUserListByType } from '../../common/js/request.js'
   export default {
-    name: 'GeniusList',
+    name: 'BossList',
     components: {
       ListCard
     },
     created() {
-      this._getUserList('genius')
+      this._getUserList('boss')
     },
     data() {
       return {
-        geniusList: []
+        bossList: []
       }
     },
     methods: {
@@ -43,10 +45,10 @@
             return
           }
           res = res.data
-          this.geniusList = res.filter(item => {
+          this.bossList = res.filter(item => {
             return item.avatar
           })
-          console.log('genius list', this.geniusList)
+          console.log('boss list', this.bossList)
         }).catch(err => {
           Toast({
             message: '网络错误',
@@ -60,9 +62,9 @@
 </script>
 
 <style lang="stylus" scoped>
-  .genius-list
-    margin-bottom 50px
-    .genius-ul
+  .boss-list
+    margin-bottom 60px
+    .boss-ul
       padding 10px
       margin-top 20px
 </style>

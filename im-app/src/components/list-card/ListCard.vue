@@ -8,7 +8,9 @@
       <div class="title">{{ title }}</div>
     </div>
     <div class="card-body">
+      <div class="company" v-if="company.length > 0">公司: {{ company }}</div>
       <div class="description" v-for="(desc, index) in description" :key="index">{{ desc }}</div>
+      <div class="salary" v-if="money.length > 0">薪资: {{ money }}</div>
     </div>
   </div>
 </template>
@@ -32,6 +34,14 @@
       description: {
         type: Array,
         default: ''
+      },
+      company: {
+        type: String,
+        default: ''
+      },
+      money: {
+        type: String, 
+        default: ''
       }
     },
   }
@@ -45,6 +55,7 @@
     padding 15px
     min-height 96px
     margin 5px
+    box-shadow 0 2px 2px #ddd
     .card-header
       display flex
       justify-content space-between
@@ -71,4 +82,5 @@
       padding 15px 0
       .description
         line-height 1.5
+        margin 5px 0
 </style>

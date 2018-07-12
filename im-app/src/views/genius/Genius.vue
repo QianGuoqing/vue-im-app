@@ -1,18 +1,18 @@
 <template>
-  <div class="boss">
+  <div class="genius">
     <router-view></router-view>
-    <boss-tab></boss-tab>
+    <genius-tab></genius-tab>
   </div>
 </template>
 
 <script>
   import { requestUserInfoByGet } from '../../common/js/request.js'
   import { Toast } from 'mint-ui'
-  import BossTab from '../../components/boss-tab/BossTab.vue'
+  import GeniusTab from '../../components/genius-tab/GeniusTab.vue'
   export default {
     name: 'Boss',
     components: {
-      BossTab
+      GeniusTab
     },
     created() {
       this._validateLoginStatus()

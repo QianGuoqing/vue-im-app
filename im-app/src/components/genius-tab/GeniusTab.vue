@@ -1,8 +1,8 @@
 <template>
-  <div class="boss-tab">
+  <div class="genius-tab">
     <div class="tab-item" @click="toGeniusList">
-      <img v-if="geniusTabIndex !== tabIndex" class="icon" src="./img/boss.png" alt="">
-      <img v-else class="icon" src="./img/boss-active.png" alt="">
+      <img v-if="geniusTabIndex !== tabIndex" class="icon" src="./img/job.png" alt="">
+      <img v-else class="icon" src="./img/job-active.png" alt="">
     </div>
     <div class="tab-item" @click="toBossMessage">
       <img v-if="bossMessageTabIndex !== tabIndex" class="icon" src="./img/msg.png" alt="">
@@ -22,13 +22,13 @@
       console.log(this.$route.path)
       let path = this.$route.path
       switch (path) {
-        case '/boss/genius-list':
+        case '/genius/boss-list':
           this.tabIndex = 1
           break
-        case '/boss/message':
+        case '/genius/message':
           this.tabIndex = 2
           break
-        case '/boss/center':
+        case '/genius/center':
           this.tabIndex = 3
           break
         default: 
@@ -47,19 +47,19 @@
       toGeniusList() {
         this.tabIndex = 1
         this.$router.push({
-          path: '/boss/genius-list'
+          path: '/genius/boss-list'
         })
       },
       toBossMessage() {
         this.tabIndex = 2
         this.$router.push({
-          path: '/boss/message'
+          path: '/genius/message'
         })
       },
       toBossCenter() {
         this.tabIndex = 3
         this.$router.push({
-          path: '/boss/center'
+          path: '/genius/center'
         })
       }
     },
@@ -67,7 +67,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  .boss-tab
+  .genius-tab
     width 100%
     display flex
     justify-content space-between
@@ -88,4 +88,5 @@
         border-right none
       .icon
         width 22px
+        height 22px
 </style>

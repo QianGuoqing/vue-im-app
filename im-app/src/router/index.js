@@ -6,6 +6,11 @@ import GeniusList from '../views/genius-list/GeniusList.vue'
 import BossMessage from '../views/boss-message/BossMessage.vue'
 import BossCenter from '../views/boss-center/BossCenter.vue'
 
+import Genius from '../views/genius/Genius.vue'
+import BossList from '../views/boss-list/BossList.vue'
+import GeniusMessage from '../views/genius-message/GeniusMessage.vue'
+import GeniusCenter from '../views/genius-center/GeniusCenter.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -49,6 +54,32 @@ export default new Router({
         {
           path: '',
           redirect: 'genius-list'
+        }
+      ]
+    },
+    {
+      path: '/genius',
+      name: 'Genius',
+      component: Genius,
+      children: [
+        {
+          path: 'boss-list',
+          name: 'BossList',
+          component: BossList
+        },
+        {
+          path: 'message',
+          name: 'GeniusMessage',
+          component: GeniusMessage
+        },
+        {
+          path: 'center',
+          name: 'GeniusCenter',
+          component: GeniusCenter
+        },
+        {
+          path: '',
+          redirect: 'boss-list'
         }
       ]
     },
