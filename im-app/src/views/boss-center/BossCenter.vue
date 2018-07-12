@@ -9,13 +9,14 @@
       :title="userDetail.title"
       :description="userDetail.description.split('\n')"
       :money="userDetail.money"></brief-card>
-    <mt-button class="exit" type="danger" size="large">退出登录</mt-button>
+    <mt-button @click="onLogout" class="exit" type="danger" size="large">退出登录</mt-button>
   </div>
 </template>
 
 <script>
   import AvatarItem from '../../components/avatar-item/AvatarItem.vue'
   import BriefCard from '../../components/brief-card/BriefCard.vue'
+  import browserCookie from 'browser-cookies'
   export default {
     name: 'BossCenter',
     components: {
@@ -28,6 +29,15 @@
     data() {
       return {
         userDetail: {}
+      }
+    },
+    methods: {
+      onLogout() {
+        browserCookie.erase('user_id')
+        localStorage.clear()
+        this.$router.push({
+          path: '/login'
+        })
       }
     },
   }
