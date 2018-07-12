@@ -15,6 +15,7 @@
   import AvatarItem from '../../components/avatar-item/AvatarItem.vue'
   import BriefCard from '../../components/brief-card/BriefCard.vue'
   import browserCookie from 'browser-cookies'
+  import { MessageBox } from 'mint-ui'
   export default {
     name: 'GeniusCenter',
     components: {
@@ -31,10 +32,14 @@
     },
     methods: {
       onLogout() {
-        browserCookie.erase('user_id')
-        localStorage.clear()
-        this.$router.push({
-          path: '/login'
+        MessageBox.confirm('确定要退出吗?').then(action => {
+          browserCookie.erase('user_id')
+          localStorage.clear()
+          this.$router.push({
+            path: '/login'
+          })
+        }).catch(err => {
+          
         })
       }
     },
