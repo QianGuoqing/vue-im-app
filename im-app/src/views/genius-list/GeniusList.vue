@@ -2,13 +2,13 @@
   <div class="genius-list">
     <mt-header title="Genius列表"></mt-header>
     <ul class="genius-ul">
-      <li class="genius-item" v-for="genius in geniusList" :key="genius._id">
+      <router-link tag="li" :to="{ name: 'Chat', params: { username: genius.username }}" class="genius-item" v-for="genius in geniusList" :key="genius._id">
         <list-card
           :avatar="genius.avatar"
           :username="genius.username"
           :title="genius.title"
           :description="genius.description.split('\n')"></list-card>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>

@@ -11,6 +11,8 @@ import BossList from '../views/boss-list/BossList.vue'
 import GeniusMessage from '../views/genius-message/GeniusMessage.vue'
 import GeniusCenter from '../views/genius-center/GeniusCenter.vue'
 
+import Chat from '../views/chat/Chat.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -92,6 +94,11 @@ export default new Router({
       path: '/genius-info',
       name: 'GeniusInfo',
       component: () => import('../views/genius-info/GeniusInfo.vue')
+    },
+    {
+      path: '/chat/:username',
+      name: 'Chat',
+      component: Chat
     }
   ]
 })

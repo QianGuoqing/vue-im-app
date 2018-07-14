@@ -2,7 +2,7 @@
   <div class="boss-list">
     <mt-header title="Boss列表"></mt-header>
     <ul class="boss-ul">
-      <li class="boss-item" v-for="boss in bossList" :key="boss._id">
+      <router-link tag="li" :to="{ name: 'Chat', params: { username: boss.username }}" class="boss-item" v-for="boss in bossList" :key="boss._id">
         <list-card
           :avatar="boss.avatar"
           :username="boss.username"
@@ -10,7 +10,7 @@
           :description="boss.description.split('\n')"
           :company="boss.company"
           :money="boss.money"></list-card>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>
